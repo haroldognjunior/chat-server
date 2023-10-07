@@ -26,7 +26,7 @@ app.use((err, req, res, next) => {
 // Manejo de conexiones de Socket.io
 io.on("connection", socket => {
   socket.on("message", msg => {
-    socket.broadcast.emit("message", { body: msg.body, user: msg.user });
+    socket.broadcast.emit("message", { body: msg.body, user: msg.user, hour: msg.hour });
   });
 });
 
