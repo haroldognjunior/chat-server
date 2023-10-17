@@ -18,7 +18,7 @@ app.use(cors());
 app.use(morgan("dev"));
 
 // Manejo de errores
-app.use((err, req, res, next) => {
+app.use((err, res) => {
   console.error(err);
   res.status(500).json({ error: "Something went wrong" });
 });
@@ -27,6 +27,14 @@ app.use((err, req, res, next) => {
 io.on("connection", socket => {
   socket.on("message", msg => {
     socket.broadcast.emit("message", { body: msg.body, user: msg.user, hour: msg.hour });
+  });
+
+  socket.on("hexadecimalMessage", msg => {
+    socket.broadcast.emit("hexadecimalMessage", {
+      body: msg.body,
+      type: msg.type,
+      response: msg.response,
+    });
   });
 });
 
